@@ -2,13 +2,13 @@
 //  TopHeadlineModel.swift
 //  NewsApp
 //
-//  Created by APPLE on 26/07/24.
+//  Created by Harish on 26/07/24.
 //
 
 import Foundation
 
 // MARK: - ArticleData
-struct TopHeadlineModel: Codable {
+struct TopHeadlinesModel: Codable {
     let status: String
     let totalResults: Int
     let articles: [Article]
@@ -40,7 +40,7 @@ struct Article: Codable, Identifiable {
         return author ?? ""
     }
     var articleImage: String {
-        return urlToImage ?? ""
+        return urlToImage ?? Constants.dummyImage
     }
 }
 
@@ -69,9 +69,9 @@ extension Article {
         )
     }
 }
-extension TopHeadlineModel {
-    static func dummyTopHeadlineModelData() -> TopHeadlineModel {
-        return TopHeadlineModel(
+extension TopHeadlinesModel {
+    static func dummyTopHeadlineModelData() -> TopHeadlinesModel {
+        return TopHeadlinesModel(
             status: "ok",
             totalResults: 1,
             articles: [Article(

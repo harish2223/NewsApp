@@ -9,11 +9,11 @@ import Foundation
 
 typealias StringArr = [String: String]
 
-enum ArticleEndPoint {
+enum TopHeadlinesEndPoint {
   case articleFetch(queryParams: StringArr?)
 }
 
-extension ArticleEndPoint: EndPoint {
+extension TopHeadlinesEndPoint: EndPoint {
 
     var host: String {
         "newsapi.org"

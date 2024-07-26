@@ -2,7 +2,7 @@
 //  TopHeadlinesService.swift
 //  NewsApp
 //
-//  Created by APPLE on 26/07/24.
+//  Created by Harish on 26/07/24.
 //
 
 import Foundation
@@ -26,7 +26,7 @@ extension TopHeadlinesService : FetchTopHeadlinesServiceProtocol {
                                       "category":"business",
                                       "apiKey": "\(Constants.APIKey)"]
         
-        let articleData = try await networkService.sendRequest(endpoint: ArticleEndPoint.articleFetch(queryParams: queryParams)) as TopHeadlinesModel
+        let articleData = try await networkService.sendRequest(endpoint: TopHeadlinesEndPoint.articleFetch(queryParams: queryParams)) as TopHeadlinesModel
         
         guard articleData.articles.isNotEmpty else {
             throw NetworkError.decode

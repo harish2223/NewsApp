@@ -1,12 +1,12 @@
 //
-//  NetworkTests.swift
-//  ArticlesTaskTests
+//  NewsAppTests.swift
+//  NewsAppTests
 //
-//  Created by kanagasabapathy on 01/02/24.
+//  Created by Harish on 26/07/24.
 //
 
 import XCTest
-@testable import NewsAPIArticlesTask
+@testable import NewsApp
 
 final class NetworkTests: XCTestCase {
     // URLSession to invoke the expensive testing
@@ -14,14 +14,12 @@ final class NetworkTests: XCTestCase {
     // NetworkMonitor helps in testing the Internet Reachability
     let networkMonitor = NetworkMonitor.shared
     // Used the complete URL for testing purpose
-    let completeURL = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=7798387c3293416d8928c7663997d6c3"
+    let completeURL = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=32bf86f21a8f4edfadd14782b95ae1d9"
 
-    // Testing Life Cycle method: setting up
     override func setUpWithError() throws {
         try super.setUpWithError()
         session = URLSession(configuration: .default)
     }
-    // Testing Life Cycle method: tearing down
     override func tearDownWithError() throws {
         session = nil
         try super.tearDownWithError()

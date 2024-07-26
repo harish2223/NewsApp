@@ -6,30 +6,48 @@
 //
 
 import XCTest
-
+@testable import NewsApp
 final class TopHeadlinesVewModelTest: XCTestCase {
 
-    override func setUpWithError() throws {
+    // assigning ViewModel to variable sut
+    var sut: TopheadlinesViewModel!
+    
+    @MainActor override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        sut  = TopheadlinesViewModel(getHeadlinesObject: TopHeadlinesService(networkService: MockServiceable()))
     }
 
     override func tearDownWithError() throws {
+        sut = nil
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    // Testing the fetch topheadline news with test data
+    func testFetchArticlesAsync() async {
+        var articles = await sut.articles
+        await sut.getTopHeadlines()
+        articles = await sut.articles
+        XCTAssertGreaterThan(articles.count, 0, "")
+        XCTAssertEqual(articles.first?.title, "Paypal is the latest tech company to announce layoffs - Axios")
     }
-
+    // Testing the fetch Articles with test data
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
+            Task(priority: .background, operation:  {
+                await sut.getTopHeadlines()
+            })
         }
     }
 
+}
+final class MockServiceable: Networkable {
+    func sendRequest<T>(endpoint: NewsApp.EndPoint) async throws -> T where T : Decodable {
+        let articleData = TopHeadlinesModel.dummyTopHeadlineModelData()
+        guard let article = articleData as? T else {
+            fatalError("Not articleData we are expecting")
+        }
+        return article
+    }
 }
